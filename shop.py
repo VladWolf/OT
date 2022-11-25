@@ -8,25 +8,23 @@ class Product:
     
 class ShoppingCart:
     def __init__(self):
-        self.purchases = []
-        self.goods_price = []
         self.goods_quantities = []
 
     def add(self, product, amount):
-        goods = [product for i in range(amount)]
-        self.goods_price.append(product.get_total(amount))
-        self.purchases.append(goods)
-        self.goods_quantities.append(amount)
+        self.goods_quantities.append((product, amount))
     
     def get_total(self):
-        return round(sum(self.goods_price), 2)
+        total = 0
+        for product, amount in self.goods_quantities:
+            total += product.get_total(amount)
+        
+        return round(total, 2)
 
 product = Product("Beer", 32.23)
 print(product.get_total(12))
 
 cart = ShoppingCart()
 cart.add(product, 4)
-print(cart.purchases)
 print(cart.get_total())
 
 # Волковський Владислав
