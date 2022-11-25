@@ -13,7 +13,7 @@ class ShoppingCart:
 
     def add(self, product, amount):
         goods = [product for i in range(amount)]
-        self.goods_price.append(product.price*amount)
+        self.goods_price.append(product.get_total(amount))
         self.purchases.append(goods)
     
     def get_total(self):
