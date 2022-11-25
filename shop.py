@@ -10,11 +10,13 @@ class ShoppingCart:
     def __init__(self):
         self.purchases = []
         self.goods_price = []
+        self.goods_quantities = []
 
     def add(self, product, amount):
         goods = [product for i in range(amount)]
-        self.goods_price.append(product.price*amount)
+        self.goods_price.append(product.get_total(amount))
         self.purchases.append(goods)
+        self.goods_quantities.append(amount)
     
     def get_total(self):
         return round(sum(self.goods_price), 2)
