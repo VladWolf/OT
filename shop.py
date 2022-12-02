@@ -10,6 +10,8 @@ class Product:
         return self.name
     
     def __eq__(self, other):
+        if not isinstance(other, Product):
+            return self.name == other
         return self.name == other.name and self.price == other.price
     
     def __float__(self):
@@ -48,11 +50,12 @@ class ShoppingCart:
         if isinstance(other, Product):
             self.add_product(other, 1)
             return self
+
         elif isinstance(other, ShoppingCart):
             new_obj = ShoppingCart()
             for product, amount in zip(self.purchases + other.purchases, self.goods_quantities + other.goods_quantities):
                 new_obj.add_product(product, amount)           
-        return new_obj
+            return new_obj
 
 apple = Product()
 apple.name = "apple"
@@ -89,5 +92,8 @@ new_obj.add_product(peach, 1)
 
 obj = obj + new_obj # корзины
 print(obj.__dict__)
+
+print(apple == "apple")
+print(apple == "peach")
 
 #Волковський Владислав
