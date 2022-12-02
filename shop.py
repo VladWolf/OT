@@ -1,5 +1,5 @@
 class Product:
-    def __init__(self, name='', price=''):
+    def __init__(self, name, price):
         self.name = name
         self.price = price
 
@@ -11,7 +11,7 @@ class Product:
     
     def __eq__(self, other):
         if not isinstance(other, Product):
-            return self.name == other
+            return False
         return self.name == other.name and self.price == other.price
     
     def __float__(self):
@@ -57,12 +57,8 @@ class ShoppingCart:
                 new_obj.add_product(product, amount)           
             return new_obj
 
-apple = Product()
-apple.name = "apple"
-apple.price = 10.59
-juice = Product()
-juice.name = "juice"
-juice.price = 36.55
+apple = Product("apple", 10.59)
+juice = Product("juice", 36.55)
 apple_2 = Product('apple', 10.59)
 peach = Product('peach')
 
