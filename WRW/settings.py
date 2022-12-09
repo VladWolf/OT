@@ -1,4 +1,3 @@
-STARTING_LVL = 1
 CHOICES = ('Warrior', 'Robber', 'Wizard')
 ENEEMY_LIST = ('Robber', 'Wizard', 'Warrior')
 STARTING_SCORE = 0

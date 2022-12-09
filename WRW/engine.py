@@ -10,22 +10,18 @@ def get_player_name():
     return name
 
 def play():
-    bot, player, turn = models.Enemy(), models.Player(name = get_player_name()), 0
+    name = get_player_name()
+    bot = models.Enemy()
+    player = models.Player(name)
     try:
         while player.health_poitns != 0:
-            if turn % 2 == 0:
                 try:
                     player.attack(bot)
-                    turn += 1
+                    player.defence(bot)
                 except exception.EnemyDown:
                     print(f"Enemy of {bot.level}th level is defeated")
-                    constant.STARTING_LVL += 1
-                    bot = models.Enemy(level = constant.STARTING_LVL)
+                    bot = models.Enemy()
                     player.score += constant.SCORE_FOR_AN_ENEMY
-            else:
-                try:
-                    player.defence(bot)
-                    turn -= 1
                 except exception.GameOver:
                     print(f"Game over. Your score = {player.score}")
                     with open('score.txt', 'a') as file:

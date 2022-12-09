@@ -1,21 +1,23 @@
 import settings as constant
-from random import randint
+from random import choice
 import exceptions as exception
 
 
 class Enemy:
-    def __init__(self, level = constant.STARTING_LVL):
-        self.level = level
-        self.health_points = level
+    enemy_level = 1
+    def __init__(self):
+        self.level = __class__.enemy_level
+        self.health_points = __class__.enemy_level
+        __class__.enemy_level += 1
 
     def decrease_health(self):
         self.health_points -= 1
-        if self.health_points == 0:
+        if self.health_points <= 0:
             raise exception.EnemyDown
 
     def select(self):
-        return constant.CHOICES[randint(0, 2)]
-
+        return choice(constant.CHOICES)
+    
 
 class Player:
     def __init__(self, name):
@@ -25,16 +27,17 @@ class Player:
     
     def decrease_health(self):
         self.health_poitns -= 1
-        if self.health_poitns == 0:
+        if self.health_poitns <= 0:
             raise exception.GameOver
     
     def select(self):
-        choice = 0
-        while choice not in (1, 2, 3):
+        while True:
             try:
                 choice = int(input("Warrior-1, Robber-2, Wizard-3: "))
                 if 1 > choice or choice > 3:
                     print("Enter 1 or 2 or 3")
+                else:
+                    break
             except ValueError:
                 print("Enter an integer")
         return constant.CHOICES[choice-1]
