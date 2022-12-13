@@ -1,5 +1,4 @@
 CHOICES = ('Warrior', 'Robber', 'Wizard')
-ENEEMY_LIST = ('Robber', 'Wizard', 'Warrior')
 STARTING_SCORE = 0
 PLAYER_HEALTH = 3
 DEFENCE_RESULT = ("YOUR DEFENCE IS SUCCESSFUL!", "YOUR DEFENCE IS FAILED!", "IT'S A DRAW!")

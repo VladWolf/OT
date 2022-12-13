@@ -4,16 +4,18 @@ import exceptions as exception
 
 
 class Enemy:
-    enemy_level = 1
-    def __init__(self):
-        self.level = __class__.enemy_level
-        self.health_points = __class__.enemy_level
-        __class__.enemy_level += 1
+    def __init__(self, level=1):
+        self.level = level
+        self.health_points = level
+
+    @classmethod
+    def level_up(cls, enemy):
+        return cls(enemy.level+1)
 
     def decrease_health(self):
         self.health_points -= 1
         if self.health_points <= 0:
-            raise exception.EnemyDown
+            raise exception.EnemyDownError(self.level)
 
     def select(self):
         return choice(constant.CHOICES)
@@ -28,7 +30,7 @@ class Player:
     def decrease_health(self):
         self.health_poitns -= 1
         if self.health_poitns <= 0:
-            raise exception.GameOver
+            raise exception.GameOverError(self.name, self.score)
     
     def select(self):
         while True:
@@ -48,7 +50,7 @@ class Player:
         if player == bot:
             return 2
         else:
-            return 0 if (player, bot) in list(zip(constant.CHOICES, constant.ENEEMY_LIST)) else 1
+            return 0 if (player, bot) in list(zip(constant.CHOICES, ('Robber', 'Wizard', 'Warrior'))) else 1
  
 
     def attack(self, enemy):
