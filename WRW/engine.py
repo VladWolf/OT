@@ -14,15 +14,15 @@ def play():
     bot = models.Enemy()
     player = models.Player(name)
     while player.health_poitns != 0:
-            try:
-                player.attack(bot)
-                player.defence(bot)
-            except exception.EnemyDownError as enemy_down:
-                print(enemy_down)
-                bot = models.Enemy.level_up(bot)
-                player.score += constant.SCORE_FOR_AN_ENEMY
-            except exception.GameOverError as game_over:
-                print(game_over)
+        try:
+            player.attack(bot)
+            player.defence(bot)
+        except exception.EnemyDownError as enemy_down:
+            print(enemy_down)
+            bot = models.Enemy.level_up(bot)
+            player.score += constant.SCORE_FOR_AN_ENEMY
+        except exception.GameOverError as game_over:
+            print(game_over)
 
 if __name__ == '__main__':
     try:

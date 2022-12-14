@@ -10,11 +10,11 @@ class Enemy:
 
     @classmethod
     def level_up(cls, enemy):
-        return cls(enemy.level+1)
+        return cls(enemy.level + 1)
 
     def decrease_health(self):
         self.health_points -= 1
-        if self.health_points <= 0:
+        if self.health_points < 1:
             raise exception.EnemyDownError(self.level)
 
     def select(self):
@@ -29,8 +29,8 @@ class Player:
     
     def decrease_health(self):
         self.health_poitns -= 1
-        if self.health_poitns <= 0:
-            raise exception.GameOverError(self.name, self.score)
+        if self.health_poitns < 1:
+            raise exception.GameOverError(self)
     
     def select(self):
         while True:
@@ -45,25 +45,26 @@ class Player:
         return constant.CHOICES[choice-1]
 
     @staticmethod
-    def fight(player, bot):
-        """0 - player victory, 1 - bot victory, 2 - draw"""
-        if player == bot:
-            return 2
+    def fight(attacker, defender, turn):
+        if attacker == defender:
+            return "IT'S A DRAW!"
+        elif (attacker, defender) in constant.RESULT_DICT.items():
+            return "YOUR ATTACK IS SUCCESSFUL!" if isinstance(turn, Player) else "YOUR DEFENCE IS FAILED!"
         else:
-            return 0 if (player, bot) in list(zip(constant.CHOICES, ('Robber', 'Wizard', 'Warrior'))) else 1
+            return "YOUR ATTACK IS FAILED!" if isinstance(turn, Player) else "YOUR DEFENCE IS SUCCESSFUL!"
  
 
     def attack(self, enemy):
-        result = self.fight(self.select(), enemy.select())
-        print(constant.ATTACK_RESULT[result])
+        result = self.fight(self.select(), enemy.select(), self)
+        print(result)
 
-        if result == 0:
+        if result == "YOUR ATTACK IS SUCCESSFUL!":
             self.score += 1
             enemy.decrease_health()
 
     def defence(self, enemy):
-        result = self.fight(enemy.select(), self.select())
-        print(constant.DEFENCE_RESULT[result])
+        result = self.fight(enemy.select(), self.select(), enemy)
+        print(result)
 
-        if result == 1:
+        if result == "YOUR DEFENCE IS FAILED!":
             self.decrease_health()

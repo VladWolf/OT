@@ -7,11 +7,10 @@ class EnemyDownError(Exception):
 
 
 class GameOverError(Exception):
-    def __init__(self, name, score):
-        self.name = name
-        self.score = score
+    def __init__(self, obj):
+        self.obj = obj
     
     def __str__(self):
         with open('score.txt', 'a') as file:
-            file.write(f"{self.name}, {self.score}\n")
-        return f"Game over. Your score = {self.score}"
+            file.write(f"{self.obj.name}, {self.obj.score}\n")
+        return f"Game over. Your score = {self.obj.score}"
