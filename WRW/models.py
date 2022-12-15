@@ -36,10 +36,10 @@ class Player:
         while True:
             try:
                 choice = int(input("Warrior-1, Robber-2, Wizard-3: "))
-                if 1 > choice or choice > 3:
-                    print("Enter 1 or 2 or 3")
-                else:
+                if 0 < choice <= 3:
                     break
+                else:
+                    print("Enter 1 or 2 or 3")
             except ValueError:
                 print("Enter an integer")
         return constant.CHOICES[choice-1]
@@ -47,18 +47,17 @@ class Player:
     @staticmethod
     def fight(attacker, defender, turn):
         if attacker == defender:
-            return "IT'S A DRAW!"
+            return constant.RESULT_LST[0]
         elif (attacker, defender) in constant.RESULT_DICT.items():
-            return "YOUR ATTACK IS SUCCESSFUL!" if isinstance(turn, Player) else "YOUR DEFENCE IS FAILED!"
+            return constant.RESULT_LST[1] if isinstance(turn, Player) else constant.RESULT_LST[2]
         else:
-            return "YOUR ATTACK IS FAILED!" if isinstance(turn, Player) else "YOUR DEFENCE IS SUCCESSFUL!"
- 
+            return constant.RESULT_LST[3] if isinstance(turn, Player) else constant.RESULT_LST[4]
 
     def attack(self, enemy):
         result = self.fight(self.select(), enemy.select(), self)
         print(result)
 
-        if result == "YOUR ATTACK IS SUCCESSFUL!":
+        if result == constant.RESULT_LST[1]:
             self.score += 1
             enemy.decrease_health()
 
@@ -66,5 +65,5 @@ class Player:
         result = self.fight(enemy.select(), self.select(), enemy)
         print(result)
 
-        if result == "YOUR DEFENCE IS FAILED!":
+        if result == constant.RESULT_LST[2]:
             self.decrease_health()
